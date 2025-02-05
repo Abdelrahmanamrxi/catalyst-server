@@ -66,6 +66,11 @@ const createUser=async(req,res,next)=>{
 
  
   try{
+    const user=await User.findOne({email})
+    if(user){
+      return next(createError('Email Already Exists'))
+    }
+    else{
     if(password.length<7){
       return res.status(401).json({msg:'Password must be longer than 7 characters.'})
     }
@@ -74,7 +79,8 @@ const createUser=async(req,res,next)=>{
     await new_user.save()
     const token=jwt.sign({userId:new_user._id,role:'user'},process.env.JWT_SECRET,{expiresIn:'24h'})
 
-    res.status(200).json({msg:'You have succesfully created your account',token})
+     return res.status(200).json({msg:'You have succesfully created your account',token})
+  }
   }
   catch(err){
     return next(createError("Couldn't Sign Up",500))

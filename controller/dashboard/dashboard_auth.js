@@ -18,8 +18,8 @@ const AdminLogin=async(req,res,next)=>{
         const token=jwt.sign({role:'admin'},process.env.JWT_SECRET,{expiresIn:'1d'})
         res.cookie('token',token,{
         httpOnly:true,
-        secure:false,
-        sameSite:'Strict',
+        secure:true,
+        sameSite:'None',
         maxAge:24*60*60*1000
         })
         res.status(201).json({msg:'Welcome Admin',login:true})
