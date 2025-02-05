@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(CookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:process.env.FRONTEND_ROUTE,
     methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
     credentials:true
 }))
